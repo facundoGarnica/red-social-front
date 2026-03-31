@@ -1,0 +1,40 @@
+ <!-- Botones de Login/Registro -->
+<div class="auth-buttons">
+  <button (click)="showLogin = true">Iniciar Sesión</button>
+  <button (click)="showRegister = true">Registrarse</button>
+</div>
+
+<div class="topnav">
+  <a [routerLink]="['/posts']">Inicio</a>
+  <a href="#news">Mis publicaciones</a>
+  <a href="#contact">Amigos</a>
+  <a href="#about">Configuracion</a>
+</div>
+
+<router-outlet></router-outlet>
+ <!-- Modal: Iniciar Sesión -->
+<div class="modal" *ngIf="showLogin">
+  <div class="modal-content">
+    <span class="close" (click)="showLogin = false">&times;</span>
+    <h2>Iniciar Sesión</h2>
+    <input type="text" placeholder="Usuario" [(ngModel)]="loginUsuario">
+    <input type="password" placeholder="Contraseña" [(ngModel)]="loginPassword">
+    <button (click)="login()">Ingresar</button>
+  </div>
+</div>
+
+<!-- Modal: Registrarse -->
+<div class="modal" *ngIf="showRegister">
+  <div class="modal-content">
+    <span class="close" (click)="showRegister = false">&times;</span>
+    <h2>Registrarse</h2>
+    <input type="text" placeholder="Usuario" [(ngModel)]="registerUsuario">
+    <input type="email" placeholder="Email" [(ngModel)]="registerEmail">
+    <input type="password" placeholder="Contraseña" [(ngModel)]="registerPassword">
+    <button (click)="register()">Registrarse</button>
+  </div>
+</div>
+ 
+ 
+ 
+ 

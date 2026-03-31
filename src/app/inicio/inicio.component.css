@@ -1,0 +1,125 @@
+/* Barra de navegación */
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+  display: flex;
+  justify-content: center; /* centra los links horizontalmente */
+  gap: 10px;
+  padding: 10px 0;
+}
+
+/* Links dentro de la barra */
+.topnav a {
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  border-radius: 5px;
+}
+
+/* Hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Link activo */
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+/* Botones Login/Registro (arriba de navbar) */
+.auth-buttons {
+  display: flex;
+  justify-content: center; /* centrados horizontalmente */
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.auth-buttons button {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: #04AA6D; /* mismo verde que link activo */
+  color: white;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.auth-buttons button:hover {
+  background-color: #038f5a;
+}
+
+/* Modal overlay */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6); /* overlay oscuro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Contenido del modal */
+.modal-content {
+  background-color: #f2f2f2; /* claro y elegante */
+  padding: 30px 20px;
+  border-radius: 10px;
+  width: 350px;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Inputs dentro del modal */
+.modal-content input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+/* Botón dentro del modal */
+.modal-content button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.modal-content button:hover {
+  background-color: #038f5a;
+}
+
+/* Botón cerrar */
+.close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+}
+
+.close:hover {
+  color: #04AA6D;
+}
+
+
+
