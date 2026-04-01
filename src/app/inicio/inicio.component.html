@@ -1,40 +1,93 @@
- <!-- Botones de Login/Registro -->
-<div class="auth-buttons">
-  <button (click)="showLogin = true">Iniciar Sesión</button>
-  <button (click)="showRegister = true">Registrarse</button>
-</div>
+<!-- NAVBAR COMPLETA -->
+<nav class="barra-navegacion">
 
-<div class="topnav">
-  <a [routerLink]="['/posts']">Inicio</a>
-  <a href="#news">Mis publicaciones</a>
-  <a href="#contact">Amigos</a>
-  <a href="#about">Configuracion</a>
-</div>
+ <!-- LOGO + BIENVENIDO -->
+  <div class="nav-logo">
+    <span *ngIf="usuarioActual$ | async as user; else noUser">
+      Bienvenido, {{ user.nombreUsuario }}!
+    </span>
+    <ng-template #noUser>
+      Red Social
+    </ng-template>
+  </div>
+  <!-- BOTÓN HAMBURGUESA -->
+  <button class="menu-toggle" (click)="menuAbierto = !menuAbierto">
+    ☰
+  </button>
 
+  <!-- CONTENIDO -->
+  <div class="nav-contenido" [class.activo]="menuAbierto">
+
+    <!-- LINKS -->
+    <div class="nav-izquierda">
+      <a routerLink="/inicio" routerLinkActive="activo">Inicio</a>
+      <a routerLink="new-post" routerLinkActive="activo">Mis publicaciones</a>
+    </div>
+
+    <!-- BOTONES DERECHA (lo que ya tenías, pero movido) -->
+    <div class="nav-derecha" *ngIf="!isLoggedIn()">
+      <button class="boton boton-login" (click)="showLogin = true">
+        Iniciar sesión
+      </button>
+      <button class="boton boton-registro" (click)="showRegister = true">
+        Registrarse
+      </button>
+    </div>
+
+    <div class="nav-derecha" *ngIf="isLoggedIn()">
+      <button class="boton boton-logout" (click)="logout()">
+        Cerrar sesión
+      </button>
+    </div>
+
+  </div>
+
+</nav>
+
+<!-- TU ROUTER (INTACTO) -->
 <router-outlet></router-outlet>
- <!-- Modal: Iniciar Sesión -->
-<div class="modal" *ngIf="showLogin">
-  <div class="modal-content">
-    <span class="close" (click)="showLogin = false">&times;</span>
-    <h2>Iniciar Sesión</h2>
-    <input type="text" placeholder="Usuario" [(ngModel)]="loginUsuario">
-    <input type="password" placeholder="Contraseña" [(ngModel)]="loginPassword">
-    <button (click)="login()">Ingresar</button>
+
+<!-- ================= MODALES (INTACTOS) ================= -->
+
+<!-- MODAL LOGIN -->
+<div class="modal-fondo" *ngIf="showLogin" (click)="closeModals()">
+  <div class="modal-contenido" (click)="$event.stopPropagation()">
+    
+    <button class="boton-cerrar" (click)="closeModals()">×</button>
+
+    <h2 class="titulo-modal">Iniciar sesión</h2>
+
+    <label>Usuario</label>
+    <input type="text" [(ngModel)]="loginUsuario" placeholder="Ingrese su usuario">
+
+    <label>Contraseña</label>
+    <input type="password" [(ngModel)]="loginPassword" placeholder="Ingrese su contraseña">
+
+    <button class="boton boton-primario" (click)="login()">
+      Ingresar
+    </button>
   </div>
 </div>
 
-<!-- Modal: Registrarse -->
-<div class="modal" *ngIf="showRegister">
-  <div class="modal-content">
-    <span class="close" (click)="showRegister = false">&times;</span>
-    <h2>Registrarse</h2>
-    <input type="text" placeholder="Usuario" [(ngModel)]="registerUsuario">
-    <input type="email" placeholder="Email" [(ngModel)]="registerEmail">
-    <input type="password" placeholder="Contraseña" [(ngModel)]="registerPassword">
-    <button (click)="register()">Registrarse</button>
+<!-- MODAL REGISTRO -->
+<div class="modal-fondo" *ngIf="showRegister" (click)="closeModals()">
+  <div class="modal-contenido" (click)="$event.stopPropagation()">
+
+    <button class="boton-cerrar" (click)="closeModals()">×</button>
+
+    <h2 class="titulo-modal">Crear cuenta</h2>
+
+    <label>Usuario</label>
+    <input type="text" [(ngModel)]="registerUsuario" placeholder="Elija un usuario">
+
+    <label>Email</label>
+    <input type="email" [(ngModel)]="registerEmail" placeholder="Ingrese su email">
+
+    <label>Contraseña</label>
+    <input type="password" [(ngModel)]="registerPassword" placeholder="Cree una contraseña">
+
+    <button class="boton boton-secundario" (click)="register()">
+      Registrarse
+    </button>
   </div>
 </div>
- 
- 
- 
- 
