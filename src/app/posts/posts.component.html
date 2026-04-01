@@ -6,7 +6,9 @@
     <!-- HEADER -->
     <div class="post-meta">
       <div class="post-author">
-        <div class="author-avatar">{{ post.nombreUsuario?.charAt(0)?.toUpperCase() }}</div>
+        <div class="author-avatar">
+          {{ post.nombreUsuario?.charAt(0)?.toUpperCase() }}
+        </div>
         <div class="author-info">
           <span class="author-name">{{ post.nombreUsuario }}</span>
           <span class="post-date">{{ post.fechaFormateada }}</span>
@@ -23,47 +25,88 @@
     <!-- STATS -->
     <div class="post-stats">
       <span class="stat">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
         {{ post.cantidadLikes }}
       </span>
+
       <span class="stat">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
         {{ post.cantidadComentarios }}
       </span>
     </div>
 
     <!-- ACCIONES -->
     <div class="post-actions">
-      <button class="btn-action" (click)="toggleLike(post)">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-        Me gusta
-      </button>
+
+      <!-- LIKE -->
+     <button 
+  class="btn-action"
+  [class.liked]="post.meGustaDelUsuario"
+  (click)="toggleLike(post)"
+  [disabled]="post.cargandoLike"
+>
+  <svg width="15" height="15" viewBox="0 0 24 24"
+    [attr.fill]="post.meGustaDelUsuario ? '#e0245e' : 'none'"
+    [attr.stroke]="post.meGustaDelUsuario ? '#e0245e' : 'currentColor'"
+    stroke-width="1.8"
+  >
+    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+  </svg>
+  {{ post.meGustaDelUsuario ? 'Te gusta' : 'Me gusta' }}
+</button>
+
+      <!-- COMENTARIOS -->
       <button class="btn-action" (click)="post.showComments = !post.showComments">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
         Comentarios
       </button>
+
     </div>
 
     <!-- COMENTARIOS -->
     <div class="comments-section" *ngIf="post.showComments">
+
       <div class="comments-list">
         <div class="comment" *ngFor="let comment of post.comentarios">
-          <div class="comment-avatar">{{ comment.nombreUsuario?.charAt(0)?.toUpperCase() }}</div>
+
+          <div class="comment-avatar">
+            {{ comment.nombreUsuario?.charAt(0)?.toUpperCase() }}
+          </div>
+
           <div class="comment-body">
             <div class="comment-header">
               <span class="comment-author">{{ comment.nombreUsuario }}</span>
-              <span class="comment-date">{{ comment.fecha | date:'d MMM, HH:mm' }}</span>
+              <span class="comment-date">
+                {{ comment.fecha | date:'d MMM, HH:mm' }}
+              </span>
             </div>
             <p class="comment-text">{{ comment.contenido }}</p>
           </div>
+
           <button
             class="btn-delete-comment"
             *ngIf="esComentarioDelUsuario(comment)"
             (click)="eliminarComentario(post, comment)"
             title="Eliminar comentario"
           >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v6M14 11v6"></path><path d="M9 6V4h6v2"></path></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="1.8">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6l-1 14H6L5 6"></path>
+              <path d="M10 11v6M14 11v6"></path>
+              <path d="M9 6V4h6v2"></path>
+            </svg>
           </button>
+
         </div>
 
         <p class="no-comments" *ngIf="post.comentarios?.length === 0">
@@ -80,9 +123,14 @@
           (keyup.enter)="agregarComentario(post)"
         >
         <button class="btn-send" (click)="agregarComentario(post)">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
         </button>
       </div>
+
     </div>
 
   </div>
